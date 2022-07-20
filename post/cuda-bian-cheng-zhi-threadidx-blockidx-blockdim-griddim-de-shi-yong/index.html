@@ -1,0 +1,275 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CUDA编程之threadIdx, blockIdx, blockDim, gridDim的使用 | baymin</title>
+<link rel="shortcut icon" href="https://blog.baymin.eu.org/favicon.ico?v=1658276127496">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.baymin.eu.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="CUDA编程之threadIdx, blockIdx, blockDim, gridDim的使用 | baymin - Atom Feed" href="https://blog.baymin.eu.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="具体：
+threadIdx是一个uint3类型，表示一个线程的索引。
+blockIdx是一个uint3类型，表示一个线程块的索引，一个线程块中通常有多个线程。
+blockDim是一个dim3类型，表示线程块的大小。
+gridDim是一个di..." />
+    <meta name="keywords" content="高性能计算" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.baymin.eu.org">
+  <img class="avatar" src="https://blog.baymin.eu.org/images/avatar.png?v=1658276127496" alt="">
+  </a>
+  <h1 class="site-title">
+    baymin
+  </h1>
+  <p class="site-description">
+    一蓑烟雨任平生
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/post/link" class="menu">
+          书签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CUDA编程之threadIdx, blockIdx, blockDim, gridDim的使用
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-06-20
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://blog.baymin.eu.org/tag/zfZDB3FbB/" class="post-tag">
+                  # 高性能计算
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p>具体：<br>
+threadIdx是一个uint3类型，表示一个线程的索引。<br>
+blockIdx是一个uint3类型，表示一个线程块的索引，一个线程块中通常有多个线程。<br>
+blockDim是一个dim3类型，表示线程块的大小。<br>
+gridDim是一个dim3类型，表示网格的大小，一个网格中通常有多个线程块。</p>
+<p>cuda 通过&lt;&lt;&lt; &gt;&gt;&gt;符号来分配索引线程的方式，例如以下的索引方式。</p>
+<pre><code class="language-C++">1.	//thread 1D
+int i = threadIdx.x;
+testThread1&lt;&lt;&lt;1, size&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+2.	//thread 2D
+int i = threadIdx.x + threadIdx.y*blockDim.x; 
+//uint3 s;s.x = size/5;s.y = 5;s.z = 1; 
+//testThread2 &lt;&lt;&lt;1,s&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+3.	//thread 3D
+int i = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+//uint3 s; s.x = size / 10; s.y = 5; s.z = 2;
+//testThread3&lt;&lt;&lt;1, s &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+4.	//block 1D
+int i = blockIdx.x;
+//testBlock1&lt;&lt;&lt;size,1 &gt;&gt;&gt;(dev_c, dev_a, dev_b); 
+5.	//block 2D
+int i = blockIdx.x + blockIdx.y*gridDim.x;
+//uint3 s; s.x = size / 5; s.y = 5; s.z = 1;
+//testBlock2&lt;&lt;&lt;s, 1 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+   
+6.	//block 3D
+int i = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+//uint3 s; s.x = size / 10; s.y = 5; s.z = 2;
+//testBlock3&lt;&lt;&lt;s, 1 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+    
+7.	//block-thread 1D-1D
+int i = threadIdx.x + blockDim.x*blockIdx.x;
+//testBlockThread1&lt;&lt;&lt;size/10, 10&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+ 
+8.	//block-thread 1D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int i = threadId_2D+ (blockDim.x*blockDim.y)*blockIdx.x;
+//uint3 s1; s1.x = size / 100; s1.y = 1; s1.z = 1;
+//uint3 s2; s2.x = 10; s2.y = 10; s2.z = 1;
+//testBlockThread2 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+   
+9.	//block-thread 1D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockIdx.x;
+//uint3 s1; s1.x = size / 100; s1.y = 1; s1.z = 1;
+//uint3 s2; s2.x = 10; s2.y = 5; s2.z = 2;
+//testBlockThread3 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+   
+10.	//block-thread 2D-1D
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadIdx.x + blockDim.x*blockId_2D;
+//uint3 s1; s1.x = 10; s1.y = 10; s1.z = 1;
+//uint3 s2; s2.x = size / 100; s2.y = 1; s2.z = 1;
+//testBlockThread4 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+11.	//block-thread 3D-1D
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadIdx.x + blockDim.x*blockId_3D;
+//uint3 s1; s1.x = 10; s1.y = 5; s1.z = 2;
+//uint3 s2; s2.x = size / 100; s2.y = 1; s2.z = 1;
+//testBlockThread5 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+12.	//block-thread 2D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadId_2D + (blockDim.x*blockDim.y)*blockId_2D;
+//uint3 s1; s1.x = size / 100; s1.y = 10; s1.z = 1;
+//uint3 s2; s2.x = 5; s2.y = 2; s2.z = 1;
+//testBlockThread6 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+    
+13.	//block-thread 2D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockId_2D;
+//uint3 s1; s1.x = size / 100; s1.y = 5; s1.z = 1;
+//uint3 s2; s2.x = 5; s2.y = 2; s2.z = 2;
+//testBlockThread7 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+ 
+14.	//block-thread 3D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadId_2D + (blockDim.x*blockDim.y)*blockId_3D;
+//uint3 s1; s1.x = 5; s1.y = 2; s1.z = 2;
+//uint3 s2; s2.x = size / 100; s2.y = 5; s2.z = 1;
+//testBlockThread8 &lt;&lt;&lt;s1, s2 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+    
+15.	//block-thread 3D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockId_3D;    
+//uint3 s1; s1.x = 5; s1.y = 2; s1.z = 2;
+//uint3 s2; s2.x = size / 200; s2.y = 5; s2.z = 2;
+//testBlockThread9&lt;&lt;&lt;s1, s2 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.baymin.eu.org/post/cuda-bian-cheng-shi-xian-qiu-jie-dan-yuan-bellman-ford-zui-duan-lu-jing-suan-fa/">
+              <h3 class="post-title">
+                CUDA编程实现求解单源Bellman-Ford最短路径算法
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" style="font-size:12px">北京时间:</a>
+<span id="Beijing_z43d" style="font-size:12px"></span>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+time_is_widget.init({Beijing_z43d:{template:"TIME<br>DATE<br>SUN", date_format:"year-monthnum-daynumdayname", sun_format:"日出: srhour:srminute 日落: sshour:ssminute<br>昼长: dlhours时 dlminutes分", coords:"39.9075000,116.3972300"}});
+</script>
+  <a class="rss" href="https://blog.baymin.eu.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

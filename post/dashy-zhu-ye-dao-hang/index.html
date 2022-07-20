@@ -1,0 +1,219 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashy - 主页导航 | baymin</title>
+<link rel="shortcut icon" href="https://blog.baymin.eu.org/favicon.ico?v=1658276127496">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.baymin.eu.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Dashy - 主页导航 | baymin - Atom Feed" href="https://blog.baymin.eu.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="0. 简介
+通过Vercel+本地环境，实现免费网页版主页导航
+注意：由于网络原因，可能会导致网站打开速度缓慢或者网站报错的问题，推荐使用国内服务器直接搭建。
+文档地址：Dashy
+1. 方法1：使用自己的服务器搭建
+fork一份代码到自己..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.baymin.eu.org">
+  <img class="avatar" src="https://blog.baymin.eu.org/images/avatar.png?v=1658276127496" alt="">
+  </a>
+  <h1 class="site-title">
+    baymin
+  </h1>
+  <p class="site-description">
+    一蓑烟雨任平生
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/post/link" class="menu">
+          书签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Dashy - 主页导航
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-07-02
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h2 id="0-简介">0. 简介</h2>
+<p>通过Vercel+本地环境，实现免费网页版主页导航<br>
+注意：由于网络原因，可能会导致<code>网站打开速度缓慢</code>或者<code>网站报错</code>的问题，推荐使用国内服务器直接搭建。<br>
+文档地址：<a href="https://dashy.to/docs">Dashy</a></p>
+<h2 id="1-方法1使用自己的服务器搭建">1. 方法1：使用自己的服务器搭建</h2>
+<p>fork一份代码到自己的仓库：<br>
+https://github.com/lissy93/dashy</p>
+<h2 id="1-方法2一键部署到vercel">1. 方法2：一键部署到Vercel</h2>
+<p>https://vercel.com/new/project?template=https://github.com/lissy93/dashy</p>
+<h2 id="2-将该仓库拉取到服务器环境本地">2. 将该仓库拉取到服务器环境/本地</h2>
+<p><code>git clone git@github.com:你的GitHub用户名/dashy.git</code></p>
+<h2 id="3-本地运行调试">3. 本地运行调试</h2>
+<h3 id="31-初次运行">3.1 初次运行</h3>
+<pre><code class="language-bash">yarn # Install dependencies
+yarn build  # Build the app
+yarn start   # Start the app
+</code></pre>
+<h3 id="32-修改配置文件后运行">3.2 修改配置文件后运行</h3>
+<pre><code class="language-bash">yarn build &amp;&amp; yarn start  # Build the app and Start the app
+</code></pre>
+<h2 id="end">end</h2>
+<p>push到github即可自动将在线版更新为本地修改好的版本</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#0-%E7%AE%80%E4%BB%8B">0. 简介</a></li>
+<li><a href="#1-%E6%96%B9%E6%B3%951%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B7%B1%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA">1. 方法1：使用自己的服务器搭建</a></li>
+<li><a href="#1-%E6%96%B9%E6%B3%952%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%88%B0vercel">1. 方法2：一键部署到Vercel</a></li>
+<li><a href="#2-%E5%B0%86%E8%AF%A5%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E6%9C%AC%E5%9C%B0">2. 将该仓库拉取到服务器环境/本地</a></li>
+<li><a href="#3-%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C%E8%B0%83%E8%AF%95">3. 本地运行调试</a>
+<ul>
+<li><a href="#31-%E5%88%9D%E6%AC%A1%E8%BF%90%E8%A1%8C">3.1 初次运行</a></li>
+<li><a href="#32-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%8E%E8%BF%90%E8%A1%8C">3.2 修改配置文件后运行</a></li>
+</ul>
+</li>
+<li><a href="#end">end</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.baymin.eu.org/post/na-zha-jian-kong-mian-ban-zhi-bao-jing-tong-zhi-mo-qia-jiang-ban/">
+              <h3 class="post-title">
+                哪吒监控面板之报警通知(摩卡酱版)
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" style="font-size:12px">北京时间:</a>
+<span id="Beijing_z43d" style="font-size:12px"></span>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+time_is_widget.init({Beijing_z43d:{template:"TIME<br>DATE<br>SUN", date_format:"year-monthnum-daynumdayname", sun_format:"日出: srhour:srminute 日落: sshour:ssminute<br>昼长: dlhours时 dlminutes分", coords:"39.9075000,116.3972300"}});
+</script>
+  <a class="rss" href="https://blog.baymin.eu.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

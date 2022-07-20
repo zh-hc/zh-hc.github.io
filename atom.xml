@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://blog.baymin.eu.org</id>
+    <title>baymin</title>
+    <updated>2022-07-20T00:15:32.202Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://blog.baymin.eu.org"/>
+    <link rel="self" href="https://blog.baymin.eu.org/atom.xml"/>
+    <subtitle>一蓑烟雨任平生</subtitle>
+    <logo>https://blog.baymin.eu.org/images/avatar.png</logo>
+    <icon>https://blog.baymin.eu.org/favicon.ico</icon>
+    <rights>All rights reserved 2022, baymin</rights>
+    <entry>
+        <title type="html"><![CDATA[AcWing 66. 两个链表的第一个公共结点]]></title>
+        <id>https://blog.baymin.eu.org/post/acwing-66-liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian/</id>
+        <link href="https://blog.baymin.eu.org/post/acwing-66-liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian/">
+        </link>
+        <updated>2022-07-19T03:02:45.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
+<p>输入两个链表，找出它们的第一个公共结点。<br>
+当不存在公共节点时，返回空节点。</p>
+<p><strong>数据范围</strong><br>
+链表长度<code>[1,2000]</code>。</p>
+<p><strong>样例</strong></p>
+<pre><code>给出两个链表如下所示：
+A：        a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗            
+B:     b1 → b2 → b3
+
+输出第一个公共节点c1
+</code></pre>
+<h2 id="备注">备注</h2>
+<p><strong>本题调试框内输入输出的含义</strong><br>
+如果大家打算在调试框内构造输入输出，格式如下：<br>
+输入包括三行，例如：</p>
+<pre><code>[a, b, c, d, e]
+[f, g, h]
+3
+</code></pre>
+<p>表示的两个链表分别是：</p>
+<ul>
+<li>第一个链表即输入第一行的链表：<code>[a, b, c, d, e]</code></li>
+<li>第二个链表即将输入第二行的链表接到第一行链表的第3个节点后面（链表节点下标从1开始）：<code>[a, b, c, f, g, h]</code></li>
+<li>如果输入第三行为-1，表示两个链表不相交，此时第二个链表即输入第二行的链表：<code>[f, g, h]</code><br>
+输出包括一行：</li>
+<li>如果两个链表相交，则输出相交节点的权值，即<code>c</code>；</li>
+<li>如果不相交，则输出<code>null</code></li>
+</ul>
+<h2 id="巧妙的思路">巧妙的思路</h2>
+<p>一共有两种情况，第一种情况是两个链表存在公共结点，第二种情况是两个链表不存在公共结点。<br>
+如图所示，我们定义两个指针p、q，同时定义每一个指针的路线，其中：</p>
+<ul>
+<li>p指针从第一个链表的起点出发，到达第一个链表尾部(即空结点)后，转到第二个链表起点继续前进，直到和q指针相遇为止(也就是p和q相等)</li>
+<li>q指针从第二个链表的起点出发，到达第二个链表尾部(即空结点)后，转到第一个链表起点继续前进，直到和p指针相遇为止(也就是p和q相等)</li>
+</ul>
+<p>我们将距离分别设置为如图所示的a、b、c，那么:</p>
+<ul>
+<li>当两个链表存在公共结点时，两个指针p、q走过的路径长度分别为：<code>a+c+b</code>、<code>b+c+a</code>，走过的总长度相同。</li>
+<li>当两个链表不存在公共结点时，两个指针p、q走过的路径长度分别为：<code>a+b</code>、<code>b+a</code><br>
+<img src="https://blog.baymin.eu.org/post-images/1658200600657.png" alt="" loading="lazy"></li>
+</ul>
+<h2 id="题解">题解</h2>
+<pre><code class="language-C++">/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *findFirstCommonNode(ListNode *headA, ListNode *headB) {
+        auto p = headA, q = headB;
+        while (p != q) {
+            p = p ? p-&gt;next : headB;
+            q = q ? q-&gt;next : headA;
+        }
+        return p;
+    }
+};
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AcWing 3374. 进制转换2]]></title>
+        <id>https://blog.baymin.eu.org/post/acwing-3374-jin-zhi-zhuan-huan-2/</id>
+        <link href="https://blog.baymin.eu.org/post/acwing-3374-jin-zhi-zhuan-huan-2/">
+        </link>
+        <updated>2022-07-17T06:59:17.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>高精度</strong></p>
+<h2 id="题目">题目</h2>
+<p>将 M 进制的数 X 转换为 N 进制的数输出。</p>
+<p><strong>输入格式</strong><br>
+第一行包括两个整数：M 和 N。<br>
+第二行包含一个数 X，X 是 M 进制的数，现在要求你将 M 进制的数 X 转换成 N 进制的数输出。</p>
+<p><strong>输出格式</strong><br>
+共一行，输出 X 的 N 进制表示。</p>
+<p><strong>数据范围</strong><br>
+2≤N,M≤36,<br>
+X 最多包含 100 位。<br>
+在输入中，当某一位数字的值大于 10（十进制下）时，我们用大写字母 A∼Z，分别表示（十进制下的）数值 10∼35。<br>
+在输出中，当某一位数字的值大于 10（十进制下）时，我们用小写字母 a∼z，分别表示（十进制下的）数值 10∼35。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 2
+11
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1011
+</code></pre>
+<h2 id="知识点">知识点</h2>
+<p><strong>短除法实现</strong></p>
+<pre><code class="language-C++">// A的长度不是0的时候
+while (A.size())
+{
+    int r = 0;
+    for (int i = A.size() - 1; i &gt;= 0; i -- )
+    {
+        // 商
+        A[i] += r * a;
+        // r保存余数
+        r = A[i] % b;
+        // 商
+        A[i] /= b;
+    }
+    // 删除前导0
+    while (A.size() &amp;&amp; A.back() == 0) A.pop_back();
+    if (r &lt; 10) res += to_string(r);
+    else res += r - 10 + 'a';
+}
+</code></pre>
+<h2 id="题解">题解</h2>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int main()
+{
+    int a, b;
+    string s;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; s;
+    vector&lt;int&gt; A;
+    for (int i = 0; i &lt; s.size(); i ++ )
+    {
+        char c = s[s.size() - 1 - i];
+        if (c &gt;= 'A') A.push_back(c - 'A' + 10);
+        else A.push_back(c - '0');
+    }
+    string res;
+    if (s == &quot;0&quot;) res = &quot;0&quot;;
+    else
+    {
+        while (A.size())
+        {
+            int r = 0;
+            for (int i = A.size() - 1; i &gt;= 0; i -- )
+            {
+                A[i] += r * a;
+                r = A[i] % b;
+                A[i] /= b;
+            }
+            while (A.size() &amp;&amp; A.back() == 0) A.pop_back();
+            if (r &lt; 10) res += to_string(r);
+            else res += r - 10 + 'a';
+        }
+        reverse(res.begin(), res.end());
+    }
+    cout &lt;&lt; res &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Clash+EveryProxy实现手机热点VPN分享]]></title>
+        <id>https://blog.baymin.eu.org/post/clasheveryproxy-shi-xian-shou-ji-re-dian-vpn-fen-xiang/</id>
+        <link href="https://blog.baymin.eu.org/post/clasheveryproxy-shi-xian-shou-ji-re-dian-vpn-fen-xiang/">
+        </link>
+        <updated>2022-07-16T15:11:14.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="准备">准备</h2>
+<ol>
+<li>首先下载安装好<code>Clash for Android</code>和<code>Every Proxy</code></li>
+<li>Clash中的VPN配置无误</li>
+</ol>
+<h2 id="实践">实践</h2>
+<ol>
+<li>开启手机热点</li>
+<li>开启Clash中的VPN
+<ul>
+<li>首页 -&gt; 设置 -&gt; 覆写 -&gt; 将<code>允许来自局域网的连接</code>改为<code>已启用</code>状态</li>
+</ul>
+</li>
+<li>打开Every Proxy
+<ul>
+<li>开启HTTP proxy</li>
+<li>记录Hosts值(192.168.xxx.xxx)和Port(8080)</li>
+</ul>
+</li>
+<li>进入已经连接了热点的设备，在WiFi设置中将代理设置为手动，IP地址与端口填写上一步记录下的值即可。</li>
+</ol>
+<h2 id="备注">备注</h2>
+<ol>
+<li>测试的Clash for Android版本号为<code>2.5.9.premium</code>，在OneDrive中已有备份</li>
+<li>测试的Every Proxy版本号为<code>9.2</code>，在OneDrive中已有备份</li>
+<li>测试时间：2022年7月16日</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AcWing 3373. 进制转换]]></title>
+        <id>https://blog.baymin.eu.org/post/acwing-3373-jin-zhi-zhuan-huan/</id>
+        <link href="https://blog.baymin.eu.org/post/acwing-3373-jin-zhi-zhuan-huan/">
+        </link>
+        <updated>2022-07-16T09:59:15.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
+<p>将一个长度最多为 30 位数字的十进制非负整数转换为二进制数输出。</p>
+<p><strong>输入格式</strong><br>
+输入包含多组测试数据。<br>
+每组测试数据占一行，包含一个长度不超过 30 位的十进制非负整数。</p>
+<p><strong>输出格式</strong><br>
+每组数据输出一个结果，占一行，为输入对应的二进制数。</p>
+<p><strong>数据范围</strong><br>
+输入最多包含 100 组测试数据。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>0
+1
+3
+8
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>0
+1
+11
+1000
+</code></pre>
+<h2 id="知识点">知识点</h2>
+<p><strong>高精度</strong><br>
+由题目可得，数字位数为<code>30位</code>，这个长度超过了long long范围，所以我们需要借助数组来存储<br>
+也就是使用数组来<code>模拟</code>数据，比如将五位数<code>12345</code>的每一位存在数组a中：<br>
+我们从个位开始存(即倒着存)即：<code>a[0]=5; a[1]=4; a[2]=3; a[3]=2; a[4]=1</code></p>
+<p><strong>如何计算除法</strong><br>
+通过<code>模拟</code>列竖式的方式，即从最高位开始算除法(在本题中为除以2)</p>
+<ol>
+<li>将除法得到的商push到结果C中</li>
+<li>将除法得到的余数和下一位构成一个新的数，继续进行除以2的运算，直到把被除数的每一位遍历完成为止。</li>
+</ol>
+<p><strong>将字符变成数字</strong><br>
+<code>s[s.size() - i - 1] - '0'</code></p>
+<p><strong>特殊值判断</strong><br>
+如果输入值为0，那么结果为0<br>
+<code>if (s == &quot;0&quot;) res = &quot;0&quot;;</code></p>
+<p><strong>短除法部分</strong></p>
+<pre><code class="language-C++">// 当A的长度不是0的时候
+while (A.size())
+{
+    // 个位除以2的余数
+    res += to_string(A[0] % 2);
+    // A / 2
+    A = div(A, 2);
+}
+</code></pre>
+<p><strong>div函数实现</strong></p>
+<pre><code class="language-C++">vector&lt;int&gt; div(vector&lt;int&gt; A, int b)
+{
+    // 将结果定义为C
+    vector&lt;int&gt; C;
+    // 从最高位开始循环做除法
+    for (int i = A.size() - 1, r = 0; i &gt;= 0; i -- )
+    {
+        // 使用r来保存余数与下一位组成的新数 初值为0
+        r = r * 10 + A[i];
+        // 使用C来保存新数与b相除得到的商
+        C.push_back(r / b);
+        // 保存本轮计算后的余数
+        r %= b;
+    }
+    // 将C逆序
+    reverse(C.begin(), C.end());
+    // 删除掉前导0
+    while (C.size() &amp;&amp; C.back() == 0) C.pop_back();
+    return C;
+}
+</code></pre>
+<h2 id="题解">题解</h2>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+vector&lt;int&gt; div(vector&lt;int&gt; A, int b)
+{
+    vector&lt;int&gt; C;
+    for (int i = A.size() - 1, r = 0; i &gt;= 0; i -- )
+    {
+        r = r * 10 + A[i];
+        C.push_back(r / b);
+        r %= b;
+    }
+    reverse(C.begin(), C.end());
+    while (C.size() &amp;&amp; C.back() == 0) C.pop_back();
+    return C;
+}
+
+int main()
+{
+    string s;
+    while (cin &gt;&gt; s)
+    {
+        vector&lt;int&gt; A;
+        for (int i = 0; i &lt; s.size(); i ++ )
+            A.push_back(s[s.size() - i - 1] - '0');
+
+        string res;
+        if (s == &quot;0&quot;) res = &quot;0&quot;;
+        else
+        {
+            while (A.size())
+            {
+                res += to_string(A[0] % 2);
+                A = div(A, 2);
+            }
+        }
+        reverse(res.begin(), res.end());
+        cout &lt;&lt; res &lt;&lt; endl;
+    }
+
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AcWing 3376. 成绩排序2]]></title>
+        <id>https://blog.baymin.eu.org/post/acwing-3376-cheng-ji-pai-xu-2/</id>
+        <link href="https://blog.baymin.eu.org/post/acwing-3376-cheng-ji-pai-xu-2/">
+        </link>
+        <updated>2022-07-15T02:11:50.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>双关键词排序</strong></p>
+<h2 id="题目">题目</h2>
+<p>给定学生的成绩单，成绩单中包含每个学生的学号和分数，请将成绩单按成绩从低到高的顺序重新排序。<br>
+如果学生的成绩相同，则按照学号从小到大的顺序进行排序。</p>
+<p><strong>输入格式</strong><br>
+第一行包含整数 N，表示学生数量。<br>
+接下来 N 行，每行包含两个整数 p 和 q，表示一个学生的学号和成绩。<br>
+学生的学号各不相同。</p>
+<p><strong>输出格式</strong><br>
+输出重新排序后的成绩单。<br>
+每行输出一个学生的学号和成绩，用单个空格隔开。</p>
+<p><strong>数据范围</strong><br>
+1≤N≤100,<br>
+1≤p≤100,<br>
+0≤q≤100</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>3
+1 90
+2 87
+3 92
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>2 87
+1 90
+3 92
+</code></pre>
+<h2 id="题解">题解</h2>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 110;
+
+int n;
+struct Person
+{
+    int id;
+    int score;
+    bool operator&lt; (const Person&amp; t) const
+    {
+        if (score != t.score) return score &lt; t.score;
+        return id &lt; t.id;
+    }
+}q[N];
+
+int main()
+{
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i ++ ) cin &gt;&gt; q[i].id &gt;&gt; q[i].score;
+    sort(q, q + n);
+
+    for (int i = 0; i &lt; n; i ++ ) cout &lt;&lt; q[i].id &lt;&lt; ' ' &lt;&lt; q[i].score &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[AcWing 3375. 成绩排序]]></title>
+        <id>https://blog.baymin.eu.org/post/acwing-3375-cheng-ji-pai-xu/</id>
+        <link href="https://blog.baymin.eu.org/post/acwing-3375-cheng-ji-pai-xu/">
+        </link>
+        <updated>2022-07-15T01:50:01.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题目">题目</h2>
+<p>给定学生的成绩单，成绩单中包含每个学生的姓名和分数，请按照要求将成绩单按成绩从高到低或从低到高的顺序进行重新排列。</p>
+<p>对于成绩相同的学生，无论以哪种顺序排列，都要按照原始成绩单中靠前的学生排列在前的规则处理。</p>
+<p><strong>输入格式</strong><br>
+第一行包含整数 N，表示学生个数。<br>
+第二行包含一个整数 0 或 1，表示排序规则，0 表示从高到低，1 表示从低到高。<br>
+接下来 N 行，每行描述一个学生的信息，包含一个长度不超过 10 的小写字母构成的字符串表示姓名以及一个范围在 0∼100 的整数表示分数。</p>
+<p><strong>输出格式</strong><br>
+输出重新排序后的成绩单。<br>
+每行输出一个学生的姓名和成绩，用单个空格隔开。</p>
+<p><strong>数据范围</strong><br>
+1≤N≤1000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>4
+0
+jack 70
+peter 96
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>peter 96
+jack 70
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>4
+1
+jack 70
+peter 96
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>smith 67
+jack 70
+Tom 70
+peter 96
+</code></pre>
+<h2 id="注意事项及预备知识">注意事项及预备知识</h2>
+<p>注意：<br>
+<strong>对于成绩相同的学生，无论以哪种顺序排列，都要按照原始成绩单中靠前的学生排列在前的规则处理。</strong><br>
+这句话，表示我们需要用<strong>稳定排序</strong>。可以用stable_sort</p>
+<p><strong>运算符重载的方法</strong></p>
+<pre><code class="language-C++">bool operator&gt; (const Person&amp; t) const
+{
+    return score &gt; t.score;
+}
+</code></pre>
+<h2 id="题解">题解</h2>
+<p><strong>stable_sort写法</strong></p>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n, m;
+struct Person
+{
+    string name;
+    int score;
+
+    bool operator&lt; (const Person&amp; t) const
+    {
+        return score &lt; t.score;
+    }
+    bool operator&gt; (const Person&amp; t) const
+    {
+        return score &gt; t.score;
+    }
+}q[N];
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; n; i ++ )
+        cin &gt;&gt; q[i].name &gt;&gt; q[i].score;
+
+    if (!m) stable_sort(q, q + n, greater&lt;Person&gt;());
+    else stable_sort(q, q + n);
+
+    for (int i = 0; i &lt; n; i ++ )
+        cout &lt;&lt; q[i].name &lt;&lt; ' ' &lt;&lt; q[i].score &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<p><strong>sort写法</strong></p>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n, m;
+struct Person
+{
+    string name;
+    int score;
+    int id;
+
+    bool operator&lt; (const Person&amp; t) const
+    {
+        if (score != t.score) return score &lt; t.score;
+        return id &lt; t.id;
+    }
+    bool operator&gt; (const Person&amp; t) const
+    {
+        if (score != t.score) return score &gt; t.score;
+        return id &lt; t.id;
+    }
+}q[N];
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; n; i ++ )
+    {
+        cin &gt;&gt; q[i].name &gt;&gt; q[i].score;
+        q[i].id = i;
+    }
+
+    if (!m) sort(q, q + n, greater&lt;Person&gt;());
+    else sort(q, q + n);
+
+    for (int i = 0; i &lt; n; i ++ )
+        cout &lt;&lt; q[i].name &lt;&lt; ' ' &lt;&lt; q[i].score &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux基础命令无法使用的问题]]></title>
+        <id>https://blog.baymin.eu.org/post/linux-ji-chu-ming-ling-wu-fa-shi-yong-de-wen-ti/</id>
+        <link href="https://blog.baymin.eu.org/post/linux-ji-chu-ming-ling-wu-fa-shi-yong-de-wen-ti/">
+        </link>
+        <updated>2022-07-15T01:32:37.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="报错概览">报错概览</h2>
+<figure data-type="image" tabindex="1"><img src="https://blog.baymin.eu.org/post-images/1657848824703.png" alt="" loading="lazy"></figure>
+<h2 id="临时解决方法">临时解决方法</h2>
+<p>在命令行中输入如下即可临时解决问题，但是当重启服务器或者开启新的命令行窗口时需要重新执行才可生效</p>
+<pre><code class="language-bash">export PATH=/bin:/usr/bin:$PATH
+</code></pre>
+<h2 id="永久设置-经测试无效">永久设置 - 经测试无效</h2>
+<pre><code class="language-bash"># 首先进入编辑系统环境变量文件
+vim /etc/profile
+
+# 然后将临时解决办法粘贴到最后一行
+# export PATH=/bin:/usr/bin:$PATH
+
+# 立即生效
+source /etc/profile
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Dashy - 主页导航]]></title>
+        <id>https://blog.baymin.eu.org/post/dashy-zhu-ye-dao-hang/</id>
+        <link href="https://blog.baymin.eu.org/post/dashy-zhu-ye-dao-hang/">
+        </link>
+        <updated>2022-07-02T15:03:47.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="0-简介">0. 简介</h2>
+<p>通过Vercel+本地环境，实现免费网页版主页导航<br>
+注意：由于网络原因，可能会导致<code>网站打开速度缓慢</code>或者<code>网站报错</code>的问题，推荐使用国内服务器直接搭建。<br>
+文档地址：<a href="https://dashy.to/docs">Dashy</a></p>
+<h2 id="1-方法1使用自己的服务器搭建">1. 方法1：使用自己的服务器搭建</h2>
+<p>fork一份代码到自己的仓库：<br>
+https://github.com/lissy93/dashy</p>
+<h2 id="1-方法2一键部署到vercel">1. 方法2：一键部署到Vercel</h2>
+<p>https://vercel.com/new/project?template=https://github.com/lissy93/dashy</p>
+<h2 id="2-将该仓库拉取到服务器环境本地">2. 将该仓库拉取到服务器环境/本地</h2>
+<p><code>git clone git@github.com:你的GitHub用户名/dashy.git</code></p>
+<h2 id="3-本地运行调试">3. 本地运行调试</h2>
+<h3 id="31-初次运行">3.1 初次运行</h3>
+<pre><code class="language-bash">yarn # Install dependencies
+yarn build  # Build the app
+yarn start   # Start the app
+</code></pre>
+<h3 id="32-修改配置文件后运行">3.2 修改配置文件后运行</h3>
+<pre><code class="language-bash">yarn build &amp;&amp; yarn start  # Build the app and Start the app
+</code></pre>
+<h2 id="end">end</h2>
+<p>push到github即可自动将在线版更新为本地修改好的版本</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[哪吒监控面板之报警通知(摩卡酱版)]]></title>
+        <id>https://blog.baymin.eu.org/post/na-zha-jian-kong-mian-ban-zhi-bao-jing-tong-zhi-mo-qia-jiang-ban/</id>
+        <link href="https://blog.baymin.eu.org/post/na-zha-jian-kong-mian-ban-zhi-bao-jing-tong-zhi-mo-qia-jiang-ban/">
+        </link>
+        <updated>2022-07-01T06:22:35.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="初始化tg账号">初始化TG账号</h2>
+<ol>
+<li>打开 Telegram 点击 @moka233_bot 并启用</li>
+<li>发送 /reg 命令初始化账号 (拿到Token)</li>
+</ol>
+<h2 id="在哪吒面板配置报警项">在哪吒面板配置报警项</h2>
+<ul>
+<li>text的简单示例 - 配置好即可
+<ul>
+<li>名称(自定义即可)：摩卡酱 - TG</li>
+<li>URL：https://moka.sage.run/api/send?token=你的Token&amp;text=#NEZHA#</li>
+<li>请求方式: GET</li>
+<li>请求类型: JSON</li>
+</ul>
+</li>
+<li>离线通知
+<ul>
+<li>名称：离线通知</li>
+<li>规则：<code>[{&quot;type&quot;:&quot;offline&quot;,&quot;duration&quot;:3600}]</code>(离线3600秒)</li>
+</ul>
+</li>
+<li>月流量监控
+<ul>
+<li>名称：月流量</li>
+<li>规则：<code>[{&quot;type&quot;:&quot;transfer_out_cycle&quot;,&quot;max&quot;:549755813888,&quot;cycle_start&quot;:&quot;2022-01-01T00:00:00+08:00&quot;,&quot;cycle_interval&quot;:1,&quot;cycle_unit&quot;:&quot;month&quot;}]</code>(月初到月底，最高512G流量监控)</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CUDA编程之threadIdx, blockIdx, blockDim, gridDim的使用]]></title>
+        <id>https://blog.baymin.eu.org/post/cuda-bian-cheng-zhi-threadidx-blockidx-blockdim-griddim-de-shi-yong/</id>
+        <link href="https://blog.baymin.eu.org/post/cuda-bian-cheng-zhi-threadidx-blockidx-blockdim-griddim-de-shi-yong/">
+        </link>
+        <updated>2022-06-20T03:18:59.000Z</updated>
+        <content type="html"><![CDATA[<p>具体：<br>
+threadIdx是一个uint3类型，表示一个线程的索引。<br>
+blockIdx是一个uint3类型，表示一个线程块的索引，一个线程块中通常有多个线程。<br>
+blockDim是一个dim3类型，表示线程块的大小。<br>
+gridDim是一个dim3类型，表示网格的大小，一个网格中通常有多个线程块。</p>
+<p>cuda 通过&lt;&lt;&lt; &gt;&gt;&gt;符号来分配索引线程的方式，例如以下的索引方式。</p>
+<pre><code class="language-C++">1.	//thread 1D
+int i = threadIdx.x;
+testThread1&lt;&lt;&lt;1, size&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+2.	//thread 2D
+int i = threadIdx.x + threadIdx.y*blockDim.x; 
+//uint3 s;s.x = size/5;s.y = 5;s.z = 1; 
+//testThread2 &lt;&lt;&lt;1,s&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+3.	//thread 3D
+int i = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+//uint3 s; s.x = size / 10; s.y = 5; s.z = 2;
+//testThread3&lt;&lt;&lt;1, s &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+4.	//block 1D
+int i = blockIdx.x;
+//testBlock1&lt;&lt;&lt;size,1 &gt;&gt;&gt;(dev_c, dev_a, dev_b); 
+5.	//block 2D
+int i = blockIdx.x + blockIdx.y*gridDim.x;
+//uint3 s; s.x = size / 5; s.y = 5; s.z = 1;
+//testBlock2&lt;&lt;&lt;s, 1 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+   
+6.	//block 3D
+int i = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+//uint3 s; s.x = size / 10; s.y = 5; s.z = 2;
+//testBlock3&lt;&lt;&lt;s, 1 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+    
+7.	//block-thread 1D-1D
+int i = threadIdx.x + blockDim.x*blockIdx.x;
+//testBlockThread1&lt;&lt;&lt;size/10, 10&gt;&gt;&gt;(dev_c, dev_a, dev_b);
+ 
+8.	//block-thread 1D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int i = threadId_2D+ (blockDim.x*blockDim.y)*blockIdx.x;
+//uint3 s1; s1.x = size / 100; s1.y = 1; s1.z = 1;
+//uint3 s2; s2.x = 10; s2.y = 10; s2.z = 1;
+//testBlockThread2 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+   
+9.	//block-thread 1D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockIdx.x;
+//uint3 s1; s1.x = size / 100; s1.y = 1; s1.z = 1;
+//uint3 s2; s2.x = 10; s2.y = 5; s2.z = 2;
+//testBlockThread3 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+   
+10.	//block-thread 2D-1D
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadIdx.x + blockDim.x*blockId_2D;
+//uint3 s1; s1.x = 10; s1.y = 10; s1.z = 1;
+//uint3 s2; s2.x = size / 100; s2.y = 1; s2.z = 1;
+//testBlockThread4 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+11.	//block-thread 3D-1D
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadIdx.x + blockDim.x*blockId_3D;
+//uint3 s1; s1.x = 10; s1.y = 5; s1.z = 2;
+//uint3 s2; s2.x = size / 100; s2.y = 1; s2.z = 1;
+//testBlockThread5 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+12.	//block-thread 2D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadId_2D + (blockDim.x*blockDim.y)*blockId_2D;
+//uint3 s1; s1.x = size / 100; s1.y = 10; s1.z = 1;
+//uint3 s2; s2.x = 5; s2.y = 2; s2.z = 1;
+//testBlockThread6 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+    
+13.	//block-thread 2D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int blockId_2D = blockIdx.x + blockIdx.y*gridDim.x;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockId_2D;
+//uint3 s1; s1.x = size / 100; s1.y = 5; s1.z = 1;
+//uint3 s2; s2.x = 5; s2.y = 2; s2.z = 2;
+//testBlockThread7 &lt;&lt; &lt;s1, s2 &gt;&gt; &gt;(dev_c, dev_a, dev_b);
+ 
+14.	//block-thread 3D-2D
+int threadId_2D = threadIdx.x + threadIdx.y*blockDim.x;
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadId_2D + (blockDim.x*blockDim.y)*blockId_3D;
+//uint3 s1; s1.x = 5; s1.y = 2; s1.z = 2;
+//uint3 s2; s2.x = size / 100; s2.y = 5; s2.z = 1;
+//testBlockThread8 &lt;&lt;&lt;s1, s2 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+    
+15.	//block-thread 3D-3D
+int threadId_3D = threadIdx.x + threadIdx.y*blockDim.x + threadIdx.z*blockDim.x*blockDim.y;
+int blockId_3D = blockIdx.x + blockIdx.y*gridDim.x + blockIdx.z*gridDim.x*gridDim.y;
+int i = threadId_3D + (blockDim.x*blockDim.y*blockDim.z)*blockId_3D;    
+//uint3 s1; s1.x = 5; s1.y = 2; s1.z = 2;
+//uint3 s2; s2.x = size / 200; s2.y = 5; s2.z = 2;
+//testBlockThread9&lt;&lt;&lt;s1, s2 &gt;&gt;&gt;(dev_c, dev_a, dev_b);
+</code></pre>
+]]></content>
+    </entry>
+</feed>

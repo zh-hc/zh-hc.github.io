@@ -1,0 +1,284 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AcWing 3374. 进制转换2 | baymin</title>
+<link rel="shortcut icon" href="https://blog.baymin.eu.org/favicon.ico?v=1658276127496">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.baymin.eu.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="AcWing 3374. 进制转换2 | baymin - Atom Feed" href="https://blog.baymin.eu.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="高精度
+题目
+将 M 进制的数 X 转换为 N 进制的数输出。
+输入格式
+第一行包括两个整数：M 和 N。
+第二行包含一个数 X，X 是 M 进制的数，现在要求你将 M 进制的数 X 转换成 N 进制的数输出。
+输出格式
+共一行，输出 X ..." />
+    <meta name="keywords" content="AcWing,考研算法" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.baymin.eu.org">
+  <img class="avatar" src="https://blog.baymin.eu.org/images/avatar.png?v=1658276127496" alt="">
+  </a>
+  <h1 class="site-title">
+    baymin
+  </h1>
+  <p class="site-description">
+    一蓑烟雨任平生
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/post/link" class="menu">
+          书签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              AcWing 3374. 进制转换2
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-07-17
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://blog.baymin.eu.org/tag/FbraD0kcV/" class="post-tag">
+                  # AcWing
+                </a>
+              
+                <a href="https://blog.baymin.eu.org/tag/rIJ1OJ0JO4/" class="post-tag">
+                  # 考研算法
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <p><strong>高精度</strong></p>
+<h2 id="题目">题目</h2>
+<p>将 M 进制的数 X 转换为 N 进制的数输出。</p>
+<p><strong>输入格式</strong><br>
+第一行包括两个整数：M 和 N。<br>
+第二行包含一个数 X，X 是 M 进制的数，现在要求你将 M 进制的数 X 转换成 N 进制的数输出。</p>
+<p><strong>输出格式</strong><br>
+共一行，输出 X 的 N 进制表示。</p>
+<p><strong>数据范围</strong><br>
+2≤N,M≤36,<br>
+X 最多包含 100 位。<br>
+在输入中，当某一位数字的值大于 10（十进制下）时，我们用大写字母 A∼Z，分别表示（十进制下的）数值 10∼35。<br>
+在输出中，当某一位数字的值大于 10（十进制下）时，我们用小写字母 a∼z，分别表示（十进制下的）数值 10∼35。</p>
+<p><strong>输入样例：</strong></p>
+<pre><code>10 2
+11
+</code></pre>
+<p><strong>输出样例：</strong></p>
+<pre><code>1011
+</code></pre>
+<h2 id="知识点">知识点</h2>
+<p><strong>短除法实现</strong></p>
+<pre><code class="language-C++">// A的长度不是0的时候
+while (A.size())
+{
+    int r = 0;
+    for (int i = A.size() - 1; i &gt;= 0; i -- )
+    {
+        // 商
+        A[i] += r * a;
+        // r保存余数
+        r = A[i] % b;
+        // 商
+        A[i] /= b;
+    }
+    // 删除前导0
+    while (A.size() &amp;&amp; A.back() == 0) A.pop_back();
+    if (r &lt; 10) res += to_string(r);
+    else res += r - 10 + 'a';
+}
+</code></pre>
+<h2 id="题解">题解</h2>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+int main()
+{
+    int a, b;
+    string s;
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; s;
+    vector&lt;int&gt; A;
+    for (int i = 0; i &lt; s.size(); i ++ )
+    {
+        char c = s[s.size() - 1 - i];
+        if (c &gt;= 'A') A.push_back(c - 'A' + 10);
+        else A.push_back(c - '0');
+    }
+    string res;
+    if (s == &quot;0&quot;) res = &quot;0&quot;;
+    else
+    {
+        while (A.size())
+        {
+            int r = 0;
+            for (int i = A.size() - 1; i &gt;= 0; i -- )
+            {
+                A[i] += r * a;
+                r = A[i] % b;
+                A[i] /= b;
+            }
+            while (A.size() &amp;&amp; A.back() == 0) A.pop_back();
+            if (r &lt; 10) res += to_string(r);
+            else res += r - 10 + 'a';
+        }
+        reverse(res.begin(), res.end());
+    }
+    cout &lt;&lt; res &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E7%9F%A5%E8%AF%86%E7%82%B9">知识点</a></li>
+<li><a href="#%E9%A2%98%E8%A7%A3">题解</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.baymin.eu.org/post/clasheveryproxy-shi-xian-shou-ji-re-dian-vpn-fen-xiang/">
+              <h3 class="post-title">
+                Clash+EveryProxy实现手机热点VPN分享
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" style="font-size:12px">北京时间:</a>
+<span id="Beijing_z43d" style="font-size:12px"></span>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+time_is_widget.init({Beijing_z43d:{template:"TIME<br>DATE<br>SUN", date_format:"year-monthnum-daynumdayname", sun_format:"日出: srhour:srminute 日落: sshour:ssminute<br>昼长: dlhours时 dlminutes分", coords:"39.9075000,116.3972300"}});
+</script>
+  <a class="rss" href="https://blog.baymin.eu.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

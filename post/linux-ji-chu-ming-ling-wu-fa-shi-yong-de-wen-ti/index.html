@@ -1,0 +1,207 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux基础命令无法使用的问题 | baymin</title>
+<link rel="shortcut icon" href="https://blog.baymin.eu.org/favicon.ico?v=1658276127496">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.baymin.eu.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Linux基础命令无法使用的问题 | baymin - Atom Feed" href="https://blog.baymin.eu.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="报错概览
+
+临时解决方法
+在命令行中输入如下即可临时解决问题，但是当重启服务器或者开启新的命令行窗口时需要重新执行才可生效
+export PATH=/bin:/usr/bin:$PATH
+
+永久设置 - 经测试无效
+# 首先进入编辑系统环境..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.baymin.eu.org">
+  <img class="avatar" src="https://blog.baymin.eu.org/images/avatar.png?v=1658276127496" alt="">
+  </a>
+  <h1 class="site-title">
+    baymin
+  </h1>
+  <p class="site-description">
+    一蓑烟雨任平生
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/post/link" class="menu">
+          书签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Linux基础命令无法使用的问题
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-07-15
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h2 id="报错概览">报错概览</h2>
+<figure data-type="image" tabindex="1"><img src="https://blog.baymin.eu.org/post-images/1657848824703.png" alt="" loading="lazy"></figure>
+<h2 id="临时解决方法">临时解决方法</h2>
+<p>在命令行中输入如下即可临时解决问题，但是当重启服务器或者开启新的命令行窗口时需要重新执行才可生效</p>
+<pre><code class="language-bash">export PATH=/bin:/usr/bin:$PATH
+</code></pre>
+<h2 id="永久设置-经测试无效">永久设置 - 经测试无效</h2>
+<pre><code class="language-bash"># 首先进入编辑系统环境变量文件
+vim /etc/profile
+
+# 然后将临时解决办法粘贴到最后一行
+# export PATH=/bin:/usr/bin:$PATH
+
+# 立即生效
+source /etc/profile
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%8A%A5%E9%94%99%E6%A6%82%E8%A7%88">报错概览</a></li>
+<li><a href="#%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">临时解决方法</a></li>
+<li><a href="#%E6%B0%B8%E4%B9%85%E8%AE%BE%E7%BD%AE-%E7%BB%8F%E6%B5%8B%E8%AF%95%E6%97%A0%E6%95%88">永久设置 - 经测试无效</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.baymin.eu.org/post/dashy-zhu-ye-dao-hang/">
+              <h3 class="post-title">
+                Dashy - 主页导航
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" style="font-size:12px">北京时间:</a>
+<span id="Beijing_z43d" style="font-size:12px"></span>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+time_is_widget.init({Beijing_z43d:{template:"TIME<br>DATE<br>SUN", date_format:"year-monthnum-daynumdayname", sun_format:"日出: srhour:srminute 日落: sshour:ssminute<br>昼长: dlhours时 dlminutes分", coords:"39.9075000,116.3972300"}});
+</script>
+  <a class="rss" href="https://blog.baymin.eu.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AcWing 3375. 成绩排序 | baymin</title>
+<link rel="shortcut icon" href="https://blog.baymin.eu.org/favicon.ico?v=1658276127496">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://blog.baymin.eu.org/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="AcWing 3375. 成绩排序 | baymin - Atom Feed" href="https://blog.baymin.eu.org/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目
+给定学生的成绩单，成绩单中包含每个学生的姓名和分数，请按照要求将成绩单按成绩从高到低或从低到高的顺序进行重新排列。
+对于成绩相同的学生，无论以哪种顺序排列，都要按照原始成绩单中靠前的学生排列在前的规则处理。
+输入格式
+第一行包含整数 ..." />
+    <meta name="keywords" content="AcWing,考研算法" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://blog.baymin.eu.org">
+  <img class="avatar" src="https://blog.baymin.eu.org/images/avatar.png?v=1658276127496" alt="">
+  </a>
+  <h1 class="site-title">
+    baymin
+  </h1>
+  <p class="site-description">
+    一蓑烟雨任平生
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+      
+        <a href="/post/link" class="menu">
+          书签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              AcWing 3375. 成绩排序
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-07-15
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://blog.baymin.eu.org/tag/FbraD0kcV/" class="post-tag">
+                  # AcWing
+                </a>
+              
+                <a href="https://blog.baymin.eu.org/tag/rIJ1OJ0JO4/" class="post-tag">
+                  # 考研算法
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content" v-pre>
+                <h2 id="题目">题目</h2>
+<p>给定学生的成绩单，成绩单中包含每个学生的姓名和分数，请按照要求将成绩单按成绩从高到低或从低到高的顺序进行重新排列。</p>
+<p>对于成绩相同的学生，无论以哪种顺序排列，都要按照原始成绩单中靠前的学生排列在前的规则处理。</p>
+<p><strong>输入格式</strong><br>
+第一行包含整数 N，表示学生个数。<br>
+第二行包含一个整数 0 或 1，表示排序规则，0 表示从高到低，1 表示从低到高。<br>
+接下来 N 行，每行描述一个学生的信息，包含一个长度不超过 10 的小写字母构成的字符串表示姓名以及一个范围在 0∼100 的整数表示分数。</p>
+<p><strong>输出格式</strong><br>
+输出重新排序后的成绩单。<br>
+每行输出一个学生的姓名和成绩，用单个空格隔开。</p>
+<p><strong>数据范围</strong><br>
+1≤N≤1000</p>
+<p><strong>输入样例1：</strong></p>
+<pre><code>4
+0
+jack 70
+peter 96
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输出样例1：</strong></p>
+<pre><code>peter 96
+jack 70
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输入样例2：</strong></p>
+<pre><code>4
+1
+jack 70
+peter 96
+Tom 70
+smith 67
+</code></pre>
+<p><strong>输出样例2：</strong></p>
+<pre><code>smith 67
+jack 70
+Tom 70
+peter 96
+</code></pre>
+<h2 id="注意事项及预备知识">注意事项及预备知识</h2>
+<p>注意：<br>
+<strong>对于成绩相同的学生，无论以哪种顺序排列，都要按照原始成绩单中靠前的学生排列在前的规则处理。</strong><br>
+这句话，表示我们需要用<strong>稳定排序</strong>。可以用stable_sort</p>
+<p><strong>运算符重载的方法</strong></p>
+<pre><code class="language-C++">bool operator&gt; (const Person&amp; t) const
+{
+    return score &gt; t.score;
+}
+</code></pre>
+<h2 id="题解">题解</h2>
+<p><strong>stable_sort写法</strong></p>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n, m;
+struct Person
+{
+    string name;
+    int score;
+
+    bool operator&lt; (const Person&amp; t) const
+    {
+        return score &lt; t.score;
+    }
+    bool operator&gt; (const Person&amp; t) const
+    {
+        return score &gt; t.score;
+    }
+}q[N];
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; n; i ++ )
+        cin &gt;&gt; q[i].name &gt;&gt; q[i].score;
+
+    if (!m) stable_sort(q, q + n, greater&lt;Person&gt;());
+    else stable_sort(q, q + n);
+
+    for (int i = 0; i &lt; n; i ++ )
+        cout &lt;&lt; q[i].name &lt;&lt; ' ' &lt;&lt; q[i].score &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<p><strong>sort写法</strong></p>
+<pre><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1010;
+
+int n, m;
+struct Person
+{
+    string name;
+    int score;
+    int id;
+
+    bool operator&lt; (const Person&amp; t) const
+    {
+        if (score != t.score) return score &lt; t.score;
+        return id &lt; t.id;
+    }
+    bool operator&gt; (const Person&amp; t) const
+    {
+        if (score != t.score) return score &gt; t.score;
+        return id &lt; t.id;
+    }
+}q[N];
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    for (int i = 0; i &lt; n; i ++ )
+    {
+        cin &gt;&gt; q[i].name &gt;&gt; q[i].score;
+        q[i].id = i;
+    }
+
+    if (!m) sort(q, q + n, greater&lt;Person&gt;());
+    else sort(q, q + n);
+
+    for (int i = 0; i &lt; n; i ++ )
+        cout &lt;&lt; q[i].name &lt;&lt; ' ' &lt;&lt; q[i].score &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%8F%8A%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">注意事项及预备知识</a></li>
+<li><a href="#%E9%A2%98%E8%A7%A3">题解</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://blog.baymin.eu.org/post/linux-ji-chu-ming-ling-wu-fa-shi-yong-de-wen-ti/">
+              <h3 class="post-title">
+                Linux基础命令无法使用的问题
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" style="font-size:12px">北京时间:</a>
+<span id="Beijing_z43d" style="font-size:12px"></span>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+time_is_widget.init({Beijing_z43d:{template:"TIME<br>DATE<br>SUN", date_format:"year-monthnum-daynumdayname", sun_format:"日出: srhour:srminute 日落: sshour:ssminute<br>昼长: dlhours时 dlminutes分", coords:"39.9075000,116.3972300"}});
+</script>
+  <a class="rss" href="https://blog.baymin.eu.org/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
