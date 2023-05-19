@@ -1,8 +1,8 @@
 ## 介绍
 
-创建第一篇文章
+创建一篇文章
 ```bash
-hugo new posts/first_post.md
+hugo new posts/xxx.md
 ````
 
 本地启动
