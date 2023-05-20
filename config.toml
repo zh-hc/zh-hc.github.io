@@ -36,7 +36,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
 [author]
   name = "baymin"
   email = "zh.hc@qq.com"
-  link = "https://ibaymin.com"
+  link = ""
 
 # 菜单配置
 [menu]
